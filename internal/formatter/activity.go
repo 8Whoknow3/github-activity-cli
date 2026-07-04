@@ -10,9 +10,18 @@ import (
 func FormatEvent(event models.Event) string {
 	switch event.Type {
 	case "PushEvent":
+		count := len(event.Payload.Commits)
+
+		if count == 0 {
+			return fmt.Sprintf(
+				"Pushed commits to %s",
+				event.Repo.Name,
+			)
+		}
+
 		return fmt.Sprintf(
 			"Pushed %d commits to %s",
-			len(event.Payload.Commits),
+			count,
 			event.Repo.Name,
 		)
 
