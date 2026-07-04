@@ -12,9 +12,6 @@ type Client struct {
 func NewClient() *Client {
 	return &Client{
 		httpClient: &http.Client{
-			Transport:     nil,
-			CheckRedirect: nil,
-			Jar:           nil,
 			Timeout:       10 * time.Second,
 		},
 	}
