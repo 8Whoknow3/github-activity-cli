@@ -6,7 +6,6 @@ import (
 	"github.com/8Whoknow3/github-activity-cli/internal/models"
 )
 
-// FormatEvent formats a GitHub event into a human-readable message.
 func FormatEvent(event models.Event) string {
 	switch event.Type {
 	case "PushEvent":
