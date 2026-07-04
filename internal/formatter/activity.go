@@ -6,10 +6,9 @@ import (
 	"github.com/8Whoknow3/github-activity-cli/internal/models"
 )
 
-func Format(event models.Event) string {
-
+// FormatEvent formats a GitHub event into a human-readable message.
+func FormatEvent(event models.Event) string {
 	switch event.Type {
-
 	case "PushEvent":
 		return fmt.Sprintf(
 			"Pushed %d commits to %s",
@@ -30,22 +29,38 @@ func Format(event models.Event) string {
 		)
 
 	case "IssuesEvent":
+		if event.Payload.Action != "" {
+			return fmt.Sprintf(
+				"%s issue in %s",
+				event.Payload.Action,
+				event.Repo.Name,
+			)
+		}
+
 		return fmt.Sprintf(
-			"Opened an issue in %s",
+			"Issue activity in %s",
 			event.Repo.Name,
 		)
 
 	case "CreateEvent":
+		if event.Payload.Ref != "" {
+			return fmt.Sprintf(
+				"Created %s %q in %s",
+				event.Payload.RefType,
+				event.Payload.Ref,
+				event.Repo.Name,
+			)
+		}
+
 		return fmt.Sprintf(
-			"Created %s %q in %s",
+			"Created %s in %s",
 			event.Payload.RefType,
-			event.Payload.Ref,
 			event.Repo.Name,
 		)
 
 	default:
 		return fmt.Sprintf(
-			"%s on %s",
+			"%s in %s",
 			event.Type,
 			event.Repo.Name,
 		)
