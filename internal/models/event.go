@@ -11,9 +11,22 @@ type Repo struct {
 }
 
 type Payload struct {
-	Commits []Commit `json:"commits"`
+	Action      string      `json:"action"`
+	RefType     string      `json:"ref_type"`
+	Ref         string      `json:"ref"`
+	Commits     []Commit    `json:"commits"`
+	Issue       Issue       `json:"issue"`
+	PullRequest PullRequest `json:"pull_request"`
 }
 
 type Commit struct {
 	Message string `json:"message"`
+}
+
+type Issue struct {
+	Number int `json:"number"`
+}
+
+type PullRequest struct {
+	Number int `json:"number"`
 }
